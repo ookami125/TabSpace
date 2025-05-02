@@ -149,15 +149,15 @@ void printWarnErr(std::vector<TabSpaceCount> counts) {
 			if(lastTag != token.tag) {
 				lastTag = token.tag;
 				switch(lastTag) {
-				case NONE:
-					printf("\e[0m");
-					break;
-				case WARNING:
-					printf("\e[33;1m");
-					break;
-				case ERROR:
-					printf("\e[31;1m");
-					break;
+					case NONE: {
+						printf("\e[0m");
+					} break;
+					case WARNING: {
+						printf("\e[33;1m");
+					} break;
+					case ERROR: {
+						printf("\e[31;1m");
+					}break;
 				}
 			}
 			if(token.type == TAB) {
@@ -179,7 +179,8 @@ bool checkTrailingWhitespace(TabSpaceCount& count) {
 			count.tokens[i].tag = ERROR;
 			ret = true;
 		}
-		else if (count.tokens[i].type == NEWLINE) {}
+		else if (count.tokens[i].type == NEWLINE)
+		{}
 		else {
 			break;
 		}
@@ -213,18 +214,18 @@ int main(int argc, char** argv)
 		TabSpaceCount lastCount = {};
 		for(Token token : tokens) {
 			switch(token.type) {
-				case TAB:
+				case TAB: {
 					if(recording) lastCount.tabs += 1;
 					lastCount.tokens.push_back(token);
-					break;
-				case SPACE:
+				} break;
+				case SPACE: {
 					if(recording) lastCount.spaces += 1;
 					lastCount.tokens.push_back(token);
-					break;
-				case UNKNOWN:
+				} break;
+				case UNKNOWN: {
 					recording = false;
 					lastCount.tokens.push_back(token);
-					break;
+				} break;
 				case NEWLINE: {
 					lastCount.tokens.push_back(token);
 					counts.push_back(lastCount);
